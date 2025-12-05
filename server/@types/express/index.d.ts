@@ -20,10 +20,21 @@ export declare global {
       verified?: boolean
       id: string
       logout(done: (err: unknown) => void): void
+      flash(type: string, message?: unknown): unknown[]
     }
 
     interface Locals {
       user: HmppsUser
+      validatedDates?: {
+        start: Date
+        end: Date
+        startComponents: { day: string; month: string; year: string }
+        endComponents: { day: string; month: string; year: string }
+      }
+      validatedDate?: {
+        date: Date
+        components: { day: string; month: string; year: string }
+      }
     }
   }
 }

@@ -1,0 +1,60 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% set pageTitle = applicationName + " - Dates Submitted" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+  {{ govukPanel({
+    titleText: "Dates received",
+    classes: "govuk-!-margin-bottom-8"
+  }) }}
+
+  <h2 class="govuk-heading-m">Date details</h2>
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Start date"
+        },
+        value: {
+          text: formattedStartDate
+        }
+      },
+      {
+        key: {
+          text: "End date"
+        },
+        value: {
+          text: formattedEndDate
+        }
+      },
+      {
+        key: {
+          text: "Total days"
+        },
+        value: {
+          text: totalDays + " day" + ("s" if totalDays != 1 else "") + " (inclusive)"
+        }
+      }
+    ]
+  }) }}
+
+  {{ govukInsetText({
+    html: "The period from <strong>" + formattedStartDate + "</strong> to <strong>" + formattedEndDate + "</strong> is <strong>" + intervalDescription + "</strong>."
+  }) }}
+
+  <p class="govuk-body">
+    <a href="/dates" class="govuk-link">Enter different dates</a>
+  </p>
+
+  <p class="govuk-body">
+    <a href="/" class="govuk-link">Return to home</a>
+  </p>
+
+{% endblock %}
+
