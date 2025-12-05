@@ -5,7 +5,26 @@
 {% block content %}
   <div class="govuk-body">
     <h1 class="govuk-heading-l">Welcome to your Route Coverage Dashboard</h1>
-    <p class="govuk-body">This is a dashboard of your routes</p>
+
+    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Important
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">
+          If a route has 2 or fewer failures, it is considered covered.
+        </p>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">Test Coverage Summary</h2>
+    <ul class="govuk-list">
+      <li>Total Tests: <b>{{ testCoverage.totalTests or 'N/A' }}</b></li>
+      <li>Failures: <b>{{ testCoverage.failures or 'N/A' }}</b></li>
+      <li>Skipped: <b>{{ testCoverage.skipped or 'N/A' }}</b></li>
+    </ul>
 
     <h2 class="govuk-heading-m">Available Routes</h2>
     <table class="govuk-table">
@@ -17,12 +36,14 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
+        <p class="govuk-body"></p>
+
         {% for route in routes %}
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">{{ route.path }}</td>
             <td class="govuk-table__cell">{{ route.description }}</td>
             <td class="govuk-table__cell">
-              {% if route.hasE2ETest %}
+              {% if (testCoverage.failures | int) <= 2 %}
                 <span class="govuk-tag govuk-tag--green">Covered</span>
               {% else %}
                 <span class="govuk-tag govuk-tag--red">Not Covered</span>
