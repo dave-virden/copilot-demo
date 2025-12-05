@@ -39,4 +39,3 @@ export default class DatesPage extends Page {
     this.continueButton().click()
   }
 }
-
