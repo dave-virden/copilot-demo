@@ -15,6 +15,8 @@ export default function routes({ auditService }: Services): Router {
   const siteRoutes = [
     { path: '/', description: 'Home page', hasE2ETest: true },
     { path: '/dashboard', description: 'Dashboard page', hasE2ETest: false },
+    { path: '/pnc-generator', description: 'PNC valid ID generator', hasE2ETest: false },
+    { path: '/dates', description: 'Date input page', hasE2ETest: false }
   ]
 
   router.get('/', async (req, res) => {

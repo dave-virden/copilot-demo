@@ -40,7 +40,9 @@
 
         {% for route in routes %}
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">{{ route.path }}</td>
+            <td class="govuk-table__cell">
+              <a href="{{ route.path }}" class="govuk-link">{{ route.path }}</a>
+            </td>
             <td class="govuk-table__cell">{{ route.description }}</td>
             <td class="govuk-table__cell">
               {% if (testCoverage.failures | int) <= 2 %}
