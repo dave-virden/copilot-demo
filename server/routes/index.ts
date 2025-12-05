@@ -6,8 +6,8 @@ import { Page } from '../services/auditService'
 export default function routes({ auditService }: Services): Router {
   const router = Router()
 
-  router.get('/', async (req, res, next) => {
-    await auditService.logPageView(Page.EXAMPLE_PAGE, { who: res.locals.user.username, correlationId: req.id })
+  router.get('/', async (req, res) => {
+    await auditService.logPageView(Page.EXAMPLE_PAGE, { who: 'anonymous', correlationId: req.id })
 
     return res.render('pages/index')
   })
