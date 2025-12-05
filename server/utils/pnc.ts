@@ -1,3 +1,5 @@
+import { pncFormatValidator } from './pncValidator'
+
 const SERIAL_NUM_LENGTH = 7
 const VALID_LETTERS = 'ZABCDEFGHJKLMNPQRTUVWXY'
 
@@ -9,12 +11,37 @@ export function computePncCheckChar(shortYear: string, serialNum: string): strin
   return VALID_LETTERS[checkIndex]
 }
 
-export function generatePnc(): string {
-  // Long-form PNC: YYYY/NNNNNNN[L]
+export function generatePncShort(): string {
   const now = new Date()
-  const fullYear = String(now.getFullYear()) // 4-digit year
-  const shortYear = fullYear.slice(2) // last two digits for checksum
-  const serialNum = Math.floor(Math.random() * 10_000_000).toString() // up to 7 digits
+  const shortYear = String(now.getFullYear() % 100).padStart(2, '0')
+  let serialNum: string
+  let pnc: string
+  for (let attempts = 0; attempts < 5; attempts += 1) {
+    // Generate a 1–6 digit serial (avoid zero)
+    serialNum = String(Math.floor(Math.random() * 999999) + 1)
+    const checkChar = computePncCheckChar(shortYear, serialNum)
+    pnc = `${shortYear}/${serialNum}${checkChar}`
+    if (pncFormatValidator(pnc)) return pnc
+  }
+  // Fallback to padded serial if retries fail
+  serialNum = String(Math.floor(Math.random() * 10_000_000))
   const checkChar = computePncCheckChar(shortYear, serialNum)
-  return `${fullYear}/${padSerialNumber(serialNum)}${checkChar}`
+  return `${shortYear}/${padSerialNumber(serialNum)}${checkChar}`
+}
+
+export function generatePncLong(): string {
+  const now = new Date()
+  const fullYear = String(now.getFullYear())
+  const shortYear = fullYear.slice(2)
+  let serialNum: string
+  let pnc: string
+  for (let attempts = 0; attempts < 5; attempts += 1) {
+    serialNum = Math.floor(Math.random() * 10_000_000).toString()
+    const checkChar = computePncCheckChar(shortYear, serialNum)
+    pnc = `${fullYear}/${padSerialNumber(serialNum)}${checkChar}`
+    if (pncFormatValidator(pnc)) return pnc
+  }
+  // Fallback single attempt
+  const checkChar = computePncCheckChar(shortYear, serialNum!)
+  return `${fullYear}/${padSerialNumber(serialNum!)}${checkChar}`
 }

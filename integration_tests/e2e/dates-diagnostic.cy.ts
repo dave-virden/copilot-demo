@@ -1,6 +1,3 @@
-import Page from '../pages/page'
-import DatesPage from '../pages/dates'
-
 context('Dates Route - Diagnostic', () => {
   it('can access the dates page', () => {
     cy.visit('/dates')
@@ -24,4 +21,3 @@ context('Dates Route - Diagnostic', () => {
     cy.get('#start-day').should('exist')
   })
 })
-

@@ -1,9 +1,4 @@
-import {
-  validateDateComponents,
-  validateDateRange,
-  extractDateComponents,
-  type DateComponents,
-} from './dateValidation'
+import { validateDateComponents, validateDateRange, extractDateComponents, type DateComponents } from './dateValidation'
 
 describe('dateValidation', () => {
   describe('validateDateComponents', () => {

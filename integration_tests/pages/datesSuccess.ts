@@ -19,4 +19,3 @@ export default class DatesSuccessPage extends Page {
 
   returnHomeLink = (): PageElement => cy.contains('a', 'Return to home')
 }
-

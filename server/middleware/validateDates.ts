@@ -114,4 +114,3 @@ export function validateSingleDate(config: DateFieldConfig) {
     return next()
   }
 }
-

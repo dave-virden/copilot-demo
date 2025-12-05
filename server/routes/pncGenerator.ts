@@ -1,12 +1,13 @@
 import express from 'express'
-import { generatePnc } from '../utils/pnc'
+import { generatePncShort, generatePncLong } from '../utils/pnc'
 
 export default function pncGeneratorRouter() {
   const router = express.Router()
 
   router.get('/pnc-generator', (req, res) => {
-    const pnc = generatePnc()
-    return res.render('pages/pnc-generator', { pnc })
+    const pncShort = generatePncShort()
+    const pncLong = generatePncLong()
+    return res.render('pages/pnc-generator', { pncShort, pncLong })
   })
 
   return router
