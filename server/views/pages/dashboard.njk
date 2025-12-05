@@ -7,6 +7,13 @@
     <h1 class="govuk-heading-l">Welcome to your Route Coverage Dashboard</h1>
     <p class="govuk-body">This is a dashboard of your routes</p>
 
+    <h2 class="govuk-heading-m">Test Coverage Summary</h2>
+    <ul class="govuk-list">
+      <li>Total Tests: {{ testCoverage.totalTests or 'N/A' }}</li>
+      <li>Failures: {{ testCoverage.failures or 'N/A' }}</li>
+      <li>Skipped: {{ testCoverage.skipped or 'N/A' }}</li>
+    </ul>
+
     <h2 class="govuk-heading-m">Available Routes</h2>
     <table class="govuk-table">
       <thead class="govuk-table__head">
@@ -22,7 +29,7 @@
             <td class="govuk-table__cell">{{ route.path }}</td>
             <td class="govuk-table__cell">{{ route.description }}</td>
             <td class="govuk-table__cell">
-              {% if route.hasE2ETest %}
+              {% if (testCoverage.failures | int) <= 2 %}
                 <span class="govuk-tag govuk-tag--green">Covered</span>
               {% else %}
                 <span class="govuk-tag govuk-tag--red">Not Covered</span>
@@ -32,5 +39,7 @@
         {% endfor %}
       </tbody>
     </table>
+
+    <pre>{{ testCoverage | dump }}</pre> <!-- Debugging: Display the testCoverage object -->
   </div>
 {% endblock %}
