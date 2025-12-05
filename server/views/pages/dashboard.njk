@@ -1,0 +1,36 @@
+{% extends "partials/layout.njk" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <div class="govuk-body">
+    <h1 class="govuk-heading-l">Welcome to your Route Coverage Dashboard</h1>
+    <p class="govuk-body">This is a dashboard of your routes</p>
+
+    <h2 class="govuk-heading-m">Available Routes</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Path</th>
+          <th class="govuk-table__header">Description</th>
+          <th class="govuk-table__header">Test Coverage Status</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for route in routes %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{ route.path }}</td>
+            <td class="govuk-table__cell">{{ route.description }}</td>
+            <td class="govuk-table__cell">
+              {% if route.hasE2ETest %}
+                <span class="govuk-tag govuk-tag--green">Covered</span>
+              {% else %}
+                <span class="govuk-tag govuk-tag--red">Not Covered</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
