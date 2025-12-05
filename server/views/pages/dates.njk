@@ -38,25 +38,19 @@
       } if errors | length and errors[0].href == '#start-date',
       items: [
         {
-          id: "start-day",
-          name: "Day",
           classes: "govuk-input--width-2",
-          value: formData.startDay,
-          autocomplete: "bday-day"
+          name: "day",
+          value: formData['start-day']
         },
         {
-          id: "start-month",
-          name: "Month",
           classes: "govuk-input--width-2",
-          value: formData.startMonth,
-          autocomplete: "bday-month"
+          name: "month",
+          value: formData['start-month']
         },
         {
-          id: "start-year",
-          name: "Year",
           classes: "govuk-input--width-4",
-          value: formData.startYear,
-          autocomplete: "bday-year"
+          name: "year",
+          value: formData['start-year']
         }
       ]
     }) }}
@@ -79,25 +73,19 @@
       } if errors | length and (errors[0].href == '#end-date' or errors[1] and errors[1].href == '#end-date'),
       items: [
         {
-          id: "end-day",
-          name: "Day",
           classes: "govuk-input--width-2",
-          value: formData.endDay,
-          autocomplete: "off"
+          name: "day",
+          value: formData['end-day']
         },
         {
-          id: "end-month",
-          name: "Month",
           classes: "govuk-input--width-2",
-          value: formData.endMonth,
-          autocomplete: "off"
+          name: "month",
+          value: formData['end-month']
         },
         {
-          id: "end-year",
-          name: "Year",
           classes: "govuk-input--width-4",
-          value: formData.endYear,
-          autocomplete: "off"
+          name: "year",
+          value: formData['end-year']
         }
       ]
     }) }}
