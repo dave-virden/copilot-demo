@@ -1,6 +1,7 @@
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% set pageTitle = applicationName + " - Dates Submitted" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -21,7 +22,7 @@
           text: "Start date"
         },
         value: {
-          text: startDate.day + "/" + startDate.month + "/" + startDate.year
+          text: formattedStartDate
         }
       },
       {
@@ -29,10 +30,22 @@
           text: "End date"
         },
         value: {
-          text: endDate.day + "/" + endDate.month + "/" + endDate.year
+          text: formattedEndDate
+        }
+      },
+      {
+        key: {
+          text: "Total days"
+        },
+        value: {
+          text: totalDays + " day" + ("s" if totalDays != 1 else "") + " (inclusive)"
         }
       }
     ]
+  }) }}
+
+  {{ govukInsetText({
+    html: "The period from <strong>" + formattedStartDate + "</strong> to <strong>" + formattedEndDate + "</strong> is <strong>" + intervalDescription + "</strong>."
   }) }}
 
   <p class="govuk-body">
