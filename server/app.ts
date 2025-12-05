@@ -1,4 +1,5 @@
 import express from 'express'
+import flash from 'connect-flash'
 
 import createError from 'http-errors'
 
@@ -31,6 +32,7 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
   nunjucksSetup(app)
+  app.use(flash())
   app.use(setUpCsrf())
 
   app.get(/.*/, getFrontendComponents(services))

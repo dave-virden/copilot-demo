@@ -1,0 +1,111 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set pageTitle = applicationName + " - Enter Dates" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+  {% if errors.length > 0 %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errors
+    }) }}
+  {% endif %}
+
+  <h1 class="govuk-heading-l">Enter two dates</h1>
+
+  <form method="post" action="/dates" novalidate>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukDateInput({
+      id: "start-date",
+      namePrefix: "start",
+      fieldset: {
+        legend: {
+          text: "Start date",
+          isPageHeading: false,
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      hint: {
+        text: "For example, 27 3 2024"
+      },
+      errorMessage: {
+        text: "Enter a valid start date"
+      } if errors | length and errors[0].href == '#start-date',
+      items: [
+        {
+          id: "start-day",
+          name: "Day",
+          classes: "govuk-input--width-2",
+          value: formData.startDay,
+          autocomplete: "bday-day"
+        },
+        {
+          id: "start-month",
+          name: "Month",
+          classes: "govuk-input--width-2",
+          value: formData.startMonth,
+          autocomplete: "bday-month"
+        },
+        {
+          id: "start-year",
+          name: "Year",
+          classes: "govuk-input--width-4",
+          value: formData.startYear,
+          autocomplete: "bday-year"
+        }
+      ]
+    }) }}
+
+    {{ govukDateInput({
+      id: "end-date",
+      namePrefix: "end",
+      fieldset: {
+        legend: {
+          text: "End date",
+          isPageHeading: false,
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      hint: {
+        text: "For example, 15 6 2024"
+      },
+      errorMessage: {
+        text: "Enter a valid end date"
+      } if errors | length and (errors[0].href == '#end-date' or errors[1] and errors[1].href == '#end-date'),
+      items: [
+        {
+          id: "end-day",
+          name: "Day",
+          classes: "govuk-input--width-2",
+          value: formData.endDay,
+          autocomplete: "off"
+        },
+        {
+          id: "end-month",
+          name: "Month",
+          classes: "govuk-input--width-2",
+          value: formData.endMonth,
+          autocomplete: "off"
+        },
+        {
+          id: "end-year",
+          name: "Year",
+          classes: "govuk-input--width-4",
+          value: formData.endYear,
+          autocomplete: "off"
+        }
+      ]
+    }) }}
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </form>
+
+{% endblock %}
+

@@ -1,0 +1,47 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set pageTitle = applicationName + " - Dates Submitted" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+  {{ govukPanel({
+    titleText: "Dates received",
+    classes: "govuk-!-margin-bottom-8"
+  }) }}
+
+  <h2 class="govuk-heading-m">Date details</h2>
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Start date"
+        },
+        value: {
+          text: startDate.day + "/" + startDate.month + "/" + startDate.year
+        }
+      },
+      {
+        key: {
+          text: "End date"
+        },
+        value: {
+          text: endDate.day + "/" + endDate.month + "/" + endDate.year
+        }
+      }
+    ]
+  }) }}
+
+  <p class="govuk-body">
+    <a href="/dates" class="govuk-link">Enter different dates</a>
+  </p>
+
+  <p class="govuk-body">
+    <a href="/" class="govuk-link">Return to home</a>
+  </p>
+
+{% endblock %}
+
